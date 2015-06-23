@@ -22,6 +22,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.startsWith;
 import static org.hobsoft.hamcrest.compose.ComposeMatchers.compose;
 import static org.hobsoft.hamcrest.compose.ComposeMatchers.hasFeature;
+import static org.hobsoft.hamcrest.compose.ComposeMatchers.hasFeatureValue;
 import static org.junit.Assert.assertThat;
 
 /**
@@ -71,5 +72,29 @@ public class ComposeMatchersTest
 		Matcher<String> actual = hasFeature(String::length, equalTo(1));
 
 		assertThat(actual.matches("x"), is(true));
+	}
+
+	@Test
+	public void hasFeatureValueReturnsMatcher()
+	{
+		Matcher<String> actual = hasFeatureValue("x", "y", String::toString, "z");
+
+		assertThat(actual.matches("z"), is(true));
+	}
+
+	@Test
+	public void hasFeatureValueWithoutDescriptionReturnsMatcher()
+	{
+		Matcher<String> actual = hasFeatureValue("x", String::toString, "z");
+
+		assertThat(actual.matches("z"), is(true));
+	}
+
+	@Test
+	public void hasFeatureValueWithoutNameReturnsMatcher()
+	{
+		Matcher<String> actual = hasFeatureValue(String::toString, "z");
+
+		assertThat(actual.matches("z"), is(true));
 	}
 }
